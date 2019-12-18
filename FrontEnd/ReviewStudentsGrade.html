@@ -1,0 +1,126 @@
+<style> 
+        html {
+          background-color: #2a363b;
+        }
+        h1 {
+          color: #9bd7d1;
+          border-style: solid;
+          border-width: 0px 0px 4px 20px;
+          font-size: 50px;
+          text-shadow: 3px 3px 6px #000;
+          box-shadow: 0 0px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        .button {
+            background-color: #9bd7d1;
+            border: none;
+            color: #2a363b;
+            font-weight: bold;
+            padding: 20px 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            width: 250px;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        .Ebutton {
+            background-color: #9bd7d1;
+            border: none;
+            color: #2a363b;
+            font-weight: bold;
+            padding: 20px 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            width: 25%;
+            height: 85px;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        .Ebutton:hover {
+            background-color: rgb(0, 81, 255);
+            color: white;
+        }
+        .button:hover {
+            background-color: rgb(0, 81, 255);
+            color: white;
+        }
+        div.ex1 {
+            overflow: auto;
+        }
+        button:focus {outline:0;}
+    </style>
+<html>
+    <head>
+    <div>
+        <button style="width: 10%;" class="button" onclick="backhome()">&larr;Back</button><br><br>
+    </div>
+    <div align="center">
+        <h1>Choose Exam To Review</h1>
+    </div>
+    </head>
+    
+    <body>
+    
+        <div align="center" id="exams">
+    
+        </div>
+    
+    </body>
+
+<script>
+{
+var task="TeacherExamToReview";
+var sent = "task=" +task;
+var exam="";
+var access = new XMLHttpRequest();    
+access.open("POST", "Alpha.php", true);
+access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+access.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        
+        for(i=0;i<json.length;i++){
+            exam+="<button class='Ebutton' onclick='ChooseExamToReview("+json[i][0]+")'>"+json[i][1]+"</button><br><label style='color: #2a363b;' class='fonty' id='"+json[i][0]+"'> "+json[i][1]+"</label><label id='b"+json[i][0]+"'></label><br>";
+        }
+        
+        document.getElementById("exams").innerHTML = exam;
+    }
+    else{
+        document.getElementById("exams").innerHTML = "Cant connect to database";
+    }
+}
+access.send(sent);
+}
+
+function ChooseExamToReview(id){
+    var task="TeacherExamToReviewSession";
+    var sent = "task=" +task+"&examID="+id;
+    var access = new XMLHttpRequest();    
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(id).innerHTML="Got it";
+            window.location.replace("ReviewStudentGradeSTUDENTS.html");
+        }
+        else{
+            document.getElementById(id).innerHTML = "Cant connect to database";
+        }
+    }
+    access.send(sent);
+}
+
+function backhome(){
+  window.location.replace("TeacherHomepage.html");
+}
+</script>
+</html>

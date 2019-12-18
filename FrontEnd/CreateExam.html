@@ -1,0 +1,478 @@
+<style>
+    html {
+        background-color: #2a363b;
+      }
+      .first {
+        color: #9bd7d1;
+        border-style: solid;
+        border-width: 0px 20px 4px 20px;
+        font-size: 50px;
+        text-shadow: 3px 3px 6px #000;
+        box-shadow: 0 0px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        text-align: center;
+      }
+      .second {
+        color: #9bd7d1;
+        border-style: solid;
+        border-width: 0px 0px 4px 0px;
+        font-size: 50px;
+        text-shadow: 3px 3px 6px #000;
+        text-align: center;
+      }
+      button:focus {outline:0;}
+      .button {
+          background-color: #9bd7d1;
+          border: none;
+          color: #2a363b;
+          font-weight: bold;
+          padding: 10px 5px;
+          text-align: left;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 15px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 12px;
+          width: 90%;
+          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+      
+      .button:hover {
+          background-color: rgb(0, 81, 255);
+          color: white;
+      }
+      div.ex1 {
+          overflow: auto;
+      }
+      
+    input[type='number'] {
+        -moz-appearance:textfield;
+    }
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    
+    .pane{
+      overflow-y: auto;
+      border: 2px solid powderblue;
+      background-color: #9bd7d1;
+      color: #2a363b;
+      font-weight: bold;
+    }
+    
+    .pane button{
+      background-color: #9bd7d1;
+      color: #2a363b;
+      font-weight: bold;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 17px;
+    }
+    
+    .pane button:hover{
+      background-color: cornflowerblue;
+    }
+    
+    .pane button.active {
+      background-color: white;
+    }
+    
+    .paneinfo {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid white;
+      border-top: none;
+    }
+    
+    .split{
+    height: 79%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 150;
+    overflow-x: auto;
+    overflow-y: auto;
+    padding-top: 20px;
+  }
+            
+    .left{
+      left: 0;
+      background-color: #2a363b;
+    }
+            
+    .right{
+      right: 0; 
+      background-color: #2a363b;       
+    }
+    
+    .centered{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+  input {
+  padding: 5px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+    
+</style>
+<html>
+<head>
+
+  <div>
+    <button style="width: 10%; text-align: center;" class="button" onclick="backhome()">Back</button>
+  </div>
+    <h1 class="first">Create Exam</h1>
+</head>
+
+<body>
+
+
+  <div class="split left">
+
+    <div align="center">
+      <h1 class="second" style="font-size: 30px;text-align: center; border-width: 4px 4px 4px 0px;">New Exam</h1>
+    </div>
+
+    <div align="center">
+        <b>
+            <label for="exam name" style="color:#9bd7d1; font-size: 18px;">Exam Name</label>
+            <input type = "Text" id = "examname" required>
+        </b>
+    </div>
+
+    <div id="chosen">
+    <!---- <h3>Questions You Selected</h3>-->
+        <p id="chosen"></p>
+    </div>
+
+    <div align="center">
+        <p style="color:#9bd7d1; font-size: 23px; font-weight: bold;" id="Error">
+        </p>
+    </div>
+
+    <div align="center">
+        <p style="color:#9bd7d1; font-size: 23px; font-weight: bold;" id="TScore">
+        </p>
+    </div>
+    
+    <div align="center" id="done">
+      <button style="width: 15%; text-align: center;" class="button" type="submit" onclick="save()">Create Exam</button> 
+    </div>
+
+  </div>
+
+  <div class="split right">
+
+
+    <div align="center">
+      <h1 class="second" style="font-size: 30px;text-align: center; border-width: 4px 0px 4px 4px;">Question Bank</h1>
+    </div>
+
+    <div class="pane">
+        <button class="paneclick" onclick="difficulty(type, 'All')">Show All Questions</button>
+    </div>
+
+    <div class="pane body">
+      <button class="paneclick" onclick="difficulty(type, 'Easy')">Easy</button>
+      <button class="paneclick" onclick="difficulty(type, 'Medium')">Medium</button>
+      <button class="paneclick" onclick="difficulty(type, 'Hard')">Hard</button>
+    
+      <div align="center">
+        <input type="text" id="key" onkeyup="searching(type)" placeholder="Search Key word">
+        <label for="DropDown">Search Topic</h1>
+        <select id ="DropDown">
+        
+        </select>
+      </div>
+    
+    </div>
+
+
+
+    <div id="All" class="paneinfo">
+      <h3>All</h3>
+      <p id="All">Q's All</p>
+    </div>
+
+    <div id="Easy" class="paneinfo">
+      <h3>Easy</h3>
+      <p id="Easy">Q's easy</p>
+    </div>
+
+    <div id="Medium" class="paneinfo">
+      <h3>Medium</h3>
+      <p id="Medium">Q's Med</p> 
+    </div>
+
+    <div id="Hard" class="paneinfo">
+      <h3>Hard</h3>
+      <p id="Hard">Q's Hard</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+var questions;
+var selected=new Array();
+var filtered=new Array();
+var lastdiffic;
+var total=0;
+
+function getUnique(array){
+        var uniqueArray = [];
+        
+        for(i=0; i < array.length; i++){
+            if(uniqueArray.indexOf(array[i]) === -1) {
+                uniqueArray.push(array[i]);
+            }
+        }
+        return uniqueArray;
+    }
+
+{
+  var task = "create exam";
+  var i;
+  var sent = "task=" +task;
+  var quest = "<option id='DropChoice' value=' '> </option>";
+  var arr= new Array();
+  var result= new Array();
+
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+
+        for(i=0;i<json.length;i++){
+          arr[i]=json[i][2];
+        }
+
+        result=getUnique(arr);
+          for(i=0;i<result.length;i++){
+            quest+="<option id='DropChoice' value='"+result[i]+" '>"+result[i]+" </option>";
+          }
+          document.getElementById("DropDown").innerHTML = quest;
+      }
+    }
+  access.send(sent);               
+}
+
+
+function difficulty(type, diffic) {
+  var task = "create exam";
+  var i, paneinfo, paneclick;
+  var sent = "task=" +task;
+  var quest = "";
+
+
+  var e = document.getElementById("DropDown");
+  var value = e.options[e.selectedIndex].value;
+  var textt = e.options[e.selectedIndex].text;
+
+  
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+        questions=json;
+        if(diffic=="All"){
+
+          for(i=0;i<json.length;i++){
+            if((json[i][2]).indexOf(textt)>-1){
+              quest+="<button class='button' id='Q' onclick='addQ("+json[i][0]+")'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(diffic).innerHTML = quest;
+          lastdiffic=diffic;
+        }
+        else{
+          for(i=0;i<json.length;i++){
+            if(diffic.toUpperCase()==(json[i][3]).toUpperCase() && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button' id='Q' onclick='addQ("+json[i][0]+")'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(diffic).innerHTML = quest;
+          lastdiffic=diffic;
+        }
+      }
+      
+      paneinfo = document.getElementsByClassName("paneinfo");
+        for (i = 0; i < paneinfo.length; i++) {
+          paneinfo[i].style.display = "none";
+        }
+        paneclick = document.getElementsByClassName("paneclick");
+        for (i = 0; i < paneclick.length; i++) {
+          paneclick[i].className = paneclick[i].className.replace(" active", "");
+        }
+        document.getElementById(diffic).style.display = "block";
+        type.currentTarget.className += " active";
+      }
+
+  access.send(sent);
+}
+
+function searching(type) {
+  var task = "create exam";
+  var i;
+  var sent = "task=" +task;
+  var quest = "";
+
+  var e = document.getElementById("DropDown");
+  var value = e.options[e.selectedIndex].value;
+  var textt = e.options[e.selectedIndex].text;
+  
+  input = document.getElementById("key");
+  filter = input.value.toUpperCase();
+
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+        questions=json;
+        if(lastdiffic=="All"){
+
+          for(i=0;i<json.length;i++){
+            if(((json[i][1]).toUpperCase().indexOf(filter) > -1) && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button' id='Q' onclick='addQ("+json[i][0]+")'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(lastdiffic).innerHTML = quest;
+          
+        }
+        else{
+          for(i=0;i<json.length;i++){
+            if(lastdiffic.toUpperCase()==(json[i][3]).toUpperCase() && ((json[i][1]).toUpperCase().indexOf(filter) > -1) && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button' id='Q' onclick='addQ("+json[i][0]+")'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(lastdiffic).innerHTML = quest;
+        }
+      }
+    }
+
+  access.send(sent);
+}
+
+function addQ(qid){
+  
+  selected[selected.length]=qid;
+  selected=getUnique(selected);
+  var ques="";
+  var temp;
+  var tempp;
+  for(i=0;i<selected.length;i++){
+    temp=selected[i];
+    tempp=questions[temp-1][1];
+    ques+="<button class='button' onclick='removeQ("+temp+")'>"+tempp+"</button><br><label for='s"+i+"' style='color: #9bd7d1; font-size:18px'>Points: </label><input onkeyup='Total(type)' value='0' type='number' min='0' placeholder='POINTS' id='s"+i+"' required><br>";
+  }
+  document.getElementById("chosen").innerHTML = ques;
+  filtered=selected;
+}
+
+function removeQ(id){
+  filtered = arrayRemove(selected, id);
+  document.getElementById("chosen").innerHTML ="";
+  var ques="";
+  var temp;
+  var tempp;
+  for(i=0;i<filtered.length;i++){
+    temp=filtered[i];
+    tempp=questions[temp-1][1];
+    ques+="<button class='button' onclick='removeQ("+temp+")'>"+tempp+"</button><br><label for='s"+i+"' style='color: #9bd7d1; font-size:18px'>Points: </label><input onkeyup='Total(type)' value='0' type='number' min='0' placeholder='POINTS' id='s"+i+"' required><br>";
+  }
+  document.getElementById("chosen").innerHTML = ques;
+  selected=filtered;
+}
+
+function arrayRemove(arr, value) {
+
+  return arr.filter(function(ele){
+      return ele != value;
+  });
+
+}
+
+function save(){
+
+  if(selected.length!=0 && document.getElementById("examname").validity.valid){
+
+    var task="submit created exam";
+
+    var httpQ="";
+    var httpQip="";
+
+    var qidpoints=new Array(selected.length);
+    var examname = document.getElementById("examname").value;
+    for(i=0;i<selected.length;i++){
+      qidpoints[i]=document.getElementById("s"+i).value;
+    }
+
+    for(i=0;i<selected.length;i++){
+      httpQ+="&Questions[]="+selected[i];
+      httpQip+="&points[]="+qidpoints[i]
+    }
+
+    sent="task="+task+"&examname="+examname+httpQ+httpQip;
+
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        document.getElementById("Error").innerHTML = "Exam Created";
+        document.getElementById("done").innerHTML = "<button class='button' onclick='backhome()'>Return to Home page</button>";
+
+      }
+    }
+    access.send(sent);
+  }
+  else{
+    document.getElementById("Error").innerHTML = "Fill out required feilds";
+  }
+}
+
+function Total(type){
+    var TTL=0;
+    for(i=0;i<selected.length;i++){
+      TTL+=parseFloat(document.getElementById("s"+i).value);
+    }
+
+    if(!(isNaN(TTL))){
+      document.getElementById("TScore").innerHTML ="Total Points = "+TTL;
+    }
+}
+
+function backhome(){
+  window.location.replace("TeacherHomepage.html");
+}
+
+</script> 
+
+</body>
+</html> 

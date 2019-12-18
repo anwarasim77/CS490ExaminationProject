@@ -1,0 +1,588 @@
+<style>
+  html {
+      background-color: #2a363b;
+    }
+    .first {
+      color: #9bd7d1;
+      border-style: solid;
+      border-width: 0px 20px 4px 20px;
+      font-size: 50px;
+      text-shadow: 3px 3px 6px #000;
+      box-shadow: 0 0px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      text-align: center;
+    }
+    .second {
+      color: #9bd7d1;
+      border-style: solid;
+      border-width: 0px 0px 4px 0px;
+      font-size: 50px;
+      text-shadow: 3px 3px 6px #000;
+      text-align: center;
+    }
+    button:focus {outline:0;}
+    .button {
+        background-color: #9bd7d1;
+        border: none;
+        color: #2a363b;
+        font-weight: bold;
+        padding: 10px 5px;
+        text-align: left;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 15px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        width: 90%;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    
+    .button:hover {
+        background-color: rgb(0, 81, 255);
+        color: white;
+    }
+    div.ex1 {
+        overflow: auto;
+    }
+    
+  input[type='number'] {
+      -moz-appearance:textfield;
+  }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+  }
+  
+  .pane{
+    overflow-y: auto;
+    border: 2px solid powderblue;
+    background-color: #9bd7d1;
+    color: #2a363b;
+    font-weight: bold;
+  }
+  
+  .pane button{
+    background-color: #9bd7d1;
+    color: #2a363b;
+    font-weight: bold;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+  }
+  
+  .pane button:hover{
+    background-color: cornflowerblue;
+  }
+  
+  .pane button.active {
+    background-color: white;
+  }
+  
+  .paneinfo {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid white;
+    border-top: none;
+  }
+  
+  .split{
+    height: 79%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 150;
+    overflow-x: auto;
+    overflow-y: auto;
+    padding-top: 20px;
+  }
+          
+  .left{
+    left: 0;
+    background-color: #2a363b;
+  }
+          
+  .right{
+    right: 0; 
+    background-color: #2a363b;       
+  }
+  
+  .centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+input {
+padding: 5px 10px;
+margin: 8px 0;
+box-sizing: border-box;
+}
+
+label{
+  font-weight: bold;
+  color: #9bd7d1;
+  font-size: 25px;
+}
+  
+</style>
+<html>
+<head>
+
+  <div>
+    <button style="width: 10%; text-align: center;" class="button" onclick="backhome()">Back</button>
+  </div>
+
+  <h1 class="first">Add New Question</h1>
+
+</head>
+
+<div class="split left">
+
+    <div align="center">
+      <h1 class="second" style="font-size: 30px;text-align: center; border-width: 4px 4px 4px 0px;">Type a question to add to test bank</h1>
+    </div>
+
+    <div>
+        <label>Funcion Name:</label>
+        <input type = "Text" id = "funcName" required>
+    </div>
+    <br>
+    <div>
+      <label>Description of Question:</label>
+      <input style="width: 550px" class ="textbox" type = "Text" id = "question" required>
+    </div>
+    <br>
+    <div>
+    <label>Topic:</label>
+    <select id ="DropDownD">
+        
+    </select>
+    
+    
+        <label>Difficulty:</label>
+        <select id ="DropDownDiff">
+            <option id='topic' value="Choose Difficulty">Choose Difficulty</option>
+            <option id='topic' value="EASY">EASY</option>
+            <option id='topic' value="MEDIUM">MEDIUM</option>
+            <option id='topic' value="HARD">HARD</option>
+        </select>
+    
+
+        <label>Constraint:</label>
+        <select id ="DropDownCon">
+            <option id='topic' value="None">None</option>
+            <option id='topic' value="for">for</option>
+            <option id='topic' value="while">while</option>
+            <option id='topic' value="return">return</option>
+            <option id='topic' value="print">print</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Test Case 1:</label>
+        <input type = "Text" id = "TCOne" required>
+        <label>Output 1:</label>
+        <input type = "Text" id = "OutOne" required><label><font color="red">Required*</font></label>
+    </div>
+
+    <div>
+        <label>Test Case 2:</label>
+        <input type = "Text" id = "TCTwo" required><label>
+        <label>Output 2:</label>
+        <input type = "Text" id = "OutTwo" required><label><font color="red">Required*</font></label>
+    </div>
+
+    <div>
+      <label>Test Case 3:</label>
+      <input type = "Text" id = "TCThree" required>
+      <label>Output 3:</label>
+      <input type = "Text" id = "OutThree" required>
+    </div>
+
+  <div>
+    <label>Test Case 4:</label>
+    <input type = "Text" id = "TCFour" required>
+    <label>Output 4:</label>
+    <input type = "Text" id = "OutFour" required>
+  </div>
+
+  <div>
+    <label>Test Case 5:</label>
+    <input type = "Text" id = "TCFive" required>
+    <label>Output 5:</label>
+    <input type = "Text" id = "OutFive" required>
+  </div>
+
+  <div>
+    <label>Test Case 6:</label>
+    <input type = "Text" id = "TCSix" required>
+    <label>Output 6:</label>
+    <input type = "Text" id = "OutSix" required>
+  </div>
+
+    <div align="center">
+    <p style="color: #9bd7d1;" id="msg">
+    </p>
+    </div>
+
+    <div align="center" id="done">
+          <button style="width: 15%; text-align: center;" class="button" type="submit" onclick="addQ()">Submit</button> 
+    </div>
+</div>
+    <!----------------------------------------------------------------->
+    <div class="split right">
+
+
+        <div align="center">
+          <h1 class="second" style="font-size: 30px;text-align: center; border-width: 4px 4px 4px 0px;">Question Bank</h1>
+        </div>
+    
+        <div class="pane">
+            <button class="paneclick" onclick="difficulty(type, 'All')">Show All Questions</button>
+        </div>
+    
+        <div class="pane body">
+          <button class="paneclick" onclick="difficulty(type, 'Easy')">Easy</button>
+          <button class="paneclick" onclick="difficulty(type, 'Medium')">Medium</button>
+          <button class="paneclick" onclick="difficulty(type, 'Hard')">Hard</button>
+        
+          <div align="right">
+    
+            <h4>Search Topic</h4>
+            
+            <input type="text" id="key" onkeyup="searching(type)" placeholder="Search Key word">
+            <select id ="DropDown">
+            
+            </select>
+          </div>
+        
+        </div>
+    
+    
+    
+        <div id="All" class="paneinfo borders">
+          <h3>All</h3>
+          <p id="All">Q's All</p>
+        </div>
+    
+        <div id="Easy" class="paneinfo borders">
+          <h3>Easy</h3>
+          <p id="Easy">Q's easy</p>
+        </div>
+    
+        <div id="Medium" class="paneinfo">
+          <h3>Medium</h3>
+          <p id="Medium">Q's Med</p> 
+        </div>
+    
+        <div id="Hard" class="paneinfo">
+          <h3>Hard</h3>
+          <p id="Hard">Q's Hard</p>
+        </div>
+    
+      </div>
+    <!----------------------------------------------------------------->
+</div>
+</html>
+<script>
+
+function getUnique(array){
+        var uniqueArray = [];
+        
+        for(i=0; i < array.length; i++){
+            if(uniqueArray.indexOf(array[i]) === -1) {
+                uniqueArray.push(array[i]);
+            }
+        }
+        return uniqueArray;
+}
+
+{
+  var task = "create exam";
+  var i;
+  var sent = "task=" +task;
+  var quest = "<option id='topic' value='Choose Topic'>Choose Topic</option>";
+  var quest1 = "<option id='DropChoice' value=' '> </option>";
+  var arr= new Array();
+  var result= new Array();
+
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+
+        for(i=0;i<json.length;i++){
+          arr[i]=json[i][2];
+        }
+
+        result=getUnique(arr);
+          for(i=0;i<result.length;i++){
+            quest+="<option id='topic' value='"+result[i]+" '>"+result[i]+" </option>";
+            quest1+="<option id='DropChoice' value='"+result[i]+" '>"+result[i]+" </option>";
+          }
+          document.getElementById("DropDownD").innerHTML = quest;
+          document.getElementById("DropDown").innerHTML = quest1;
+      }  
+    }
+  access.send(sent);               
+}
+
+function addQ(){
+  var task = "add Q";
+  var e = document.getElementById("DropDownD");
+  var value = e.options[e.selectedIndex].value;
+    var topic = e.options[e.selectedIndex].text;
+
+  var f = document.getElementById("DropDownDiff");
+  var val = f.options[f.selectedIndex].value;
+    var difficulty = f.options[f.selectedIndex].text;
+
+  var g = document.getElementById("DropDownCon");
+  var vale = g.options[g.selectedIndex].value;
+    var constraint = g.options[g.selectedIndex].text;
+
+    var TCThree="notestcase";
+    var TCFour="notestcase";
+    var TCFive="notestcase";
+    var TCSix="notestcase";
+
+    var OutThree="notestcase";
+    var OutFour="notestcase";
+    var OutFive="notestcase";
+    var OutSix="notestcase";
+
+    var extraCheck=true;
+
+    if(document.getElementById("TCThree").validity.valid || document.getElementById("OutThree").validity.valid){
+
+      if(document.getElementById("TCThree").validity.valid){
+        TCThree=document.getElementById("TCThree").value;
+      }else{
+        extraCheck=false;
+      }
+
+      if(document.getElementById("OutThree").validity.valid){
+        
+        OutThree=document.getElementById("OutThree").value;
+
+      }else{
+        extraCheck=false;
+      }
+
+    }
+
+    if(document.getElementById("TCFour").validity.valid || document.getElementById("OutFour").validity.valid){
+      
+      if(document.getElementById("TCFour").validity.valid){
+        TCFour=document.getElementById("TCFour").value;
+      }else{
+        extraCheck=false;
+      }
+
+      if(document.getElementById("OutFour").validity.valid){
+        
+        OutFour=document.getElementById("OutFour").value;
+
+      }else{
+        extraCheck=false;
+      }
+
+    }
+
+    if(document.getElementById("TCFive").validity.valid || document.getElementById("OutFive").validity.valid){
+
+      if(document.getElementById("TCFive").validity.valid){
+        TCFive=document.getElementById("TCFive").value;
+      }else{
+        extraCheck=false;
+      }
+
+      if(document.getElementById("OutFive").validity.valid){
+        
+        OutFive=document.getElementById("OutFive").value;
+
+      }else{
+        extraCheck=false;
+      }
+
+    }
+
+    if(document.getElementById("TCSix").validity.valid || document.getElementById("OutSix").validity.valid){
+
+      if(document.getElementById("TCSix").validity.valid){
+        TCSix=document.getElementById("TCSix").value;
+      }else{
+        extraCheck=false;
+      }
+
+      if(document.getElementById("OutSix").validity.valid){
+        
+        OutSix=document.getElementById("OutSix").value;
+
+      }else{
+        extraCheck=false;
+      }
+
+    }
+
+
+  if(extraCheck==true && document.getElementById("OutTwo").validity.valid && document.getElementById("OutOne").validity.valid && document.getElementById("question").validity.valid && difficulty!="Choose Difficulty" && topic!="Choose Topic" && document.getElementById("TCOne").validity.valid && document.getElementById("TCTwo").validity.valid && document.getElementById("funcName").validity.valid){
+    var question= document.getElementById("question").value;
+    var TCOne= document.getElementById("TCOne").value;
+    var TCTwo= document.getElementById("TCTwo").value;
+    var OutOne= document.getElementById("OutOne").value;
+    var OutTwo= document.getElementById("OutTwo").value;
+    var funcName= document.getElementById("funcName").value;
+
+
+    sent="task="+task+"&question="+question+"&topic="+topic+"&constraint="+constraint+"&TCOne="+TCOne+"&TCTwo="+TCTwo+"&difficulty="+difficulty+"&OutOne="+OutOne+"&OutTwo="+OutTwo+"&funcName="+funcName+"&TCThree="+TCThree+"&OutThree="+OutThree+"&TCFour="+TCFour+"&OutFour="+OutFour+"&TCFive="+TCFive+"&OutFive="+OutFive+"&TCSix="+TCSix+"&OutSix="+OutSix;
+
+    var access = new XMLHttpRequest();
+      access.open("POST", "Alpha.php", true);
+      access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      access.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200){
+
+          document.getElementById("msg").innerHTML = "Question Added to the Bank";
+          document.getElementById("done").innerHTML = "<button style='width: 30%; text-align: center;' class='button' onclick='backhome()'>Return to Home page</button><button style='width: 30%; text-align: center;' class='button' onclick='addmoreQ()'>Add More Questions</button>";
+
+        } 
+      }
+
+    access.send(sent);
+  }
+  else{
+    document.getElementById("msg").innerHTML = "Please fill all the fields";
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var lastdiffic;
+var total=0;
+
+function difficulty(type, diffic) {
+  var task = "create exam";
+  var i, paneinfo, paneclick;
+  var sent = "task=" +task;
+  var quest = "";
+
+
+  var e = document.getElementById("DropDown");
+  var value = e.options[e.selectedIndex].value;
+  var textt = e.options[e.selectedIndex].text;
+
+  
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+        
+        if(diffic=="All"){
+
+          for(i=0;i<json.length;i++){
+            if((json[i][2]).indexOf(textt)>-1){
+              quest+="<button class='button'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(diffic).innerHTML = quest;
+          lastdiffic=diffic;
+        }
+        else{
+          for(i=0;i<json.length;i++){
+            if(diffic.toUpperCase()==(json[i][3]).toUpperCase() && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(diffic).innerHTML = quest;
+          lastdiffic=diffic;
+        }
+      }
+      
+      paneinfo = document.getElementsByClassName("paneinfo");
+        for (i = 0; i < paneinfo.length; i++) {
+          paneinfo[i].style.display = "none";
+        }
+        paneclick = document.getElementsByClassName("paneclick");
+        for (i = 0; i < paneclick.length; i++) {
+          paneclick[i].className = paneclick[i].className.replace(" active", "");
+        }
+        document.getElementById(diffic).style.display = "block";
+        type.currentTarget.className += " active";
+      }
+
+  access.send(sent);
+}
+
+function searching(type) {
+  var task = "create exam";
+  var i;
+  var sent = "task=" +task;
+  var quest = "";
+
+  var e = document.getElementById("DropDown");
+  var value = e.options[e.selectedIndex].value;
+  var textt = e.options[e.selectedIndex].text;
+  
+  input = document.getElementById("key");
+  filter = input.value.toUpperCase();
+
+    var access = new XMLHttpRequest();
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200){
+
+        var json = JSON.parse(this.responseText);
+        
+        if(lastdiffic=="All"){
+
+          for(i=0;i<json.length;i++){
+            if(((json[i][1]).toUpperCase().indexOf(filter) > -1) && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(lastdiffic).innerHTML = quest;
+          
+        }
+        else{
+          for(i=0;i<json.length;i++){
+            if(lastdiffic.toUpperCase()==(json[i][3]).toUpperCase() && ((json[i][1]).toUpperCase().indexOf(filter) > -1) && ((json[i][2]).indexOf(textt)>-1)){
+              quest+="<button class='button'>"+json[i][1]+"</button><br>";
+            }
+          }
+          document.getElementById(lastdiffic).innerHTML = quest;
+        }
+      }
+    }
+
+  access.send(sent);
+}
+
+function backhome(){
+  window.location.replace("TeacherHomepage.html");
+}
+
+function addmoreQ(){
+  window.location.replace("addQ.html");
+}
+
+</script>

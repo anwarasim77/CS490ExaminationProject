@@ -1,0 +1,121 @@
+<html>
+
+<head>
+  <title>CS490 Alpha Login</title>
+</head>
+
+<style> 
+ body {
+    background-image: url("https://i2.wp.com/onlyvectorbackgrounds.com/wp-content/uploads/2018/10/Abstract-Geometric-Background-Blue.jpg?fit=1191%2C842&ssl=1");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  .fontoftext{
+    font-size: 70px;
+  }
+  .textbox{
+    height: 40px;
+    width: 300px;
+    font-size: 30px;
+  }
+  .borders{
+    
+    margin-top:100px;
+    margin-bottom: 100px;
+    margin-right: auto;
+    margin-left: auto;
+
+    height: 50%;
+    width: 50%;
+    border:6px solid blue;
+    border-radius: 50px;
+  }
+  
+.button1 {
+  color: black; 
+  border: 4px solid #66ACEA;
+  height: 45px;
+  width: 300px;
+  font-size: 30px;
+}
+
+.button1:hover {
+  background-color: #66ACEA;
+  color: white;
+}
+</style>
+<div class="borders">
+
+
+<h1 class="fontoftext" style="color:cornflowerblue;text-align: center">Login</h1>
+
+  <div align="center">
+    <b>
+        <label class="textbox" for="Username">Username</label>
+        <input class="textbox" type = "Text" id = "Username">
+    </b>
+  </div>
+
+  <div>
+    <p> </p>
+  </div>
+
+  <div align="center">
+    <b>
+    <label class="textbox" for="Password">Password</label>
+    <input class="textbox" type = "Password" id = "Password">
+    </b>
+  </div>
+
+  <div>
+    <p> </p>
+  </div>
+
+<div style="padding: 30px">
+
+
+  <div align="center">
+    <button class="button button1" type="submit" onclick="sendinfo()">Submit</button>
+  </div>
+
+</div>
+
+  <div align="center">
+    <p id="p"></p>
+  </div>
+
+</div>
+
+</html>
+
+<script>
+function sendinfo(){
+    var task = "login";
+    var Username = document.getElementById("Username").value;
+    var Password = document.getElementById("Password").value;
+    var sent = "Username=" +Username+ "&Password=" +Password+ "&task=" +task;
+
+    var access = new XMLHttpRequest();
+    
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        document.getElementById("p").innerHTML = json.response;
+        if (json.response == "teacher"){
+          window.location.replace("TeacherHomepage.html")
+        }
+        else if(json.response == "student"){
+          window.location.replace("StudentHomepage.html")
+        }
+        else{
+          document.getElementById("p").innerHTML = json.response;
+        }
+      }
+    }
+    access.send(sent);
+}   
+</script>

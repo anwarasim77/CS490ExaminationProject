@@ -1,0 +1,337 @@
+<style> 
+    html {
+        background-color: #2a363b;
+    }
+    h1 {
+        color: #9bd7d1;
+        border-style: solid;
+        border-width: 0px 0px 4px 20px;
+        font-size: 50px;
+        text-shadow: 3px 3px 6px #000;
+        box-shadow: 0 0px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .button {
+        background-color: #9bd7d1;
+        border: none;
+        color: #2a363b;
+        font-weight: bold;
+        padding: 15px 40px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 15px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        width: 200px;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .Ebutton {
+        background-color: #9bd7d1;
+        border: none;
+        color: #2a363b;
+        font-weight: bold;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        width: 200px;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .Ebutton:hover {
+        background-color: rgb(0, 81, 255);
+        color: white;
+    }
+    .button:hover {
+        background-color: rgb(0, 81, 255);
+        color: white;
+    }
+    div.ex1 {
+        overflow: auto;
+    }
+    button:focus {outline:0;}
+    input{outline:0;}
+    textarea{outline:0;}
+    .Questions {
+      color: #9bd7d1;
+      border-style: solid;
+      border-width: 4px 20px 0px 0px ;
+      font-size: 26px;
+      text-shadow: 3px 3px 6px #000;
+    }
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 75%;
+    font-size: 20px;
+    }
+
+    th {
+        background-color: #9bd7d1;
+        color: #2a363b;
+        text-align: left;
+        padding: 8px;
+    }
+    td{
+        background-color: whitesmoke;
+        color: #2a363b;
+        font-weight: bold;
+        text-align: left;
+        padding: 8px;
+        border: 1px solid;  
+        border-color:#2a363b;
+    }
+    td input {
+        width: 100%;
+        box-sizing: border-box;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+<html>
+    <head>
+        <div>
+            <button class="button" onclick="backhome()">Back</button>
+        </div>
+        <h1>Exam Review</h1>
+    </head>
+    <body>
+        <h1 id="name" style="display:inline"></h1><h1 id="examName" style="display:inline; border-width: 0px 0px 4px 0px;"></h1>
+        
+        <h1 style="border-width: 3px 3px 3px 3px;">
+        <div id="percentage">
+    
+        </div>
+        </h1>
+        <div id="results">
+    
+        </div>
+
+        <div id="percentage">
+    
+        </div>
+        
+        <div id="test">
+    
+        </div>
+    
+    </body>
+
+<script>
+
+var Qid=new Array();
+var Score=new Array();
+var total=0.0;
+var Ttotal=0.0;
+var TTtotal=0.0;
+{
+var task="GetResultToEdit";
+var sent = "task=" +task;
+var result="";
+var access = new XMLHttpRequest();    
+access.open("POST", "Alpha.php", true);
+access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+access.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        document.getElementById("name").innerHTML= "User ID: "+json[0][0];
+        document.getElementById("examName").innerHTML= "\t - \tExam : "+json[0][15];
+
+        for(i=0;i<json.length;i++){
+            result+="<p class='Questions'>Question : "+json[i][4]+"</p>";
+            
+            result+="<p class='Questions' style='border-width: 0px 0px 0px 0px ;' >Students response: "+json[i][3]+"</p><br>";
+            result+="<table><tr><th style='border-radius: 20px 0px 0 0; width:22% ;'>Cases</th><th  style='width:22% ;'>Status</th><th style='width:22% ;'>Expected Outcome</th><th style='width:22% ;'>Students Outcome</th><th  style='border-radius: 0px 20px 0 0; width:12% ;'>Points lost</th></tr>";
+            result+="<tr><td>Test Case 1</td>";
+            if(json[i][5]==0){
+                result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][21]+"</td><td style='text-align:center;'>"+json[i][22]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"1' value='"+json[i][5]+"'></td></tr>";
+            }
+            else{
+                result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][21]+"</td><td style='text-align:center;'>"+json[i][22]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"1' value='"+json[i][5]+"'></td></tr>";
+            }
+
+            result+="<tr><td>Test Case 2</td>";
+            if(json[i][6]==0){
+                result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][23]+"</td><td style='text-align:center;'>"+json[i][24]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"2' value='"+json[i][6]+"'></td></tr>";
+            }
+            else{
+                result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][23]+"</td><td style='text-align:center;'>"+json[i][24]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"2' value='"+json[i][6]+"'></td></tr>";
+            }
+
+            if(json[i][17]=="notestcase"){
+                if(json[i][7]==0){
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"3' value='0'>";
+                }
+                else{
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"3' value='0'>";
+                }
+            }
+            else{
+                result+="<tr><td>Test Case 3</td>";
+                if(json[i][7]==0){
+                    result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][25]+"</td><td style='text-align:center;'>"+json[i][26]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"3' value='"+json[i][7]+"'></td></tr>";
+                }
+                else{
+                    result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][25]+"</td><td style='text-align:center;'>"+json[i][26]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"3' value='"+json[i][7]+"'></td></tr>";
+                }
+            }
+
+            if(json[i][18]=="notestcase"){
+                if(json[i][8]==0){
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"4' value='0'>";
+                }
+                else{
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"4' value='0'>";
+                }
+            }
+            else{
+                result+="<tr><td>Test Case 4</td>";
+                if(json[i][8]==0){
+                    result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][27]+"</td><td style='text-align:center;'>"+json[i][28]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"4' value='"+json[i][8]+"'></td></tr>";
+                }
+                else{
+                    result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][27]+"</td><td style='text-align:center;'>"+json[i][28]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"4' value='"+json[i][8]+"'></td></tr>";
+                }
+            }
+
+            if(json[i][19]=="notestcase"){
+                if(json[i][9]==0){
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"5' value='0'>";
+                }
+                else{
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"5' value='0'>";
+                }
+            }
+            else{
+                result+="<tr><td>Test Case 5</td>";
+                if(json[i][9]==0){
+                    result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][29]+"</td><td style='text-align:center;'>"+json[i][30]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"5' value='"+json[i][9]+"'></td></tr>";
+                }
+                else{
+                    result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][29]+"</td><td style='text-align:center;'>"+json[i][30]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"5' value='"+json[i][9]+"'></td></tr>";
+                }
+            }
+
+            if(json[i][20]=="notestcase"){
+                if(json[i][10]==0){
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"6' value='0'>";
+                }
+                else{
+                    result+="<input type='hidden' min='0' id='q"+json[i][2]+"6' value='0'>";
+                }
+            }
+            else{
+                result+="<tr><td>Test Case 6</td>";
+                if(json[i][10]==0){
+                    result+="<td style='background-color: green;color: whitesmoke;text-align:center;'>Passed</td><td style='text-align:center;'>"+json[i][31]+"</td><td style='text-align:center;'>"+json[i][32]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"6' value='"+json[i][10]+"'></td></tr>";
+                }
+                else{
+                    result+="<td style='background-color: red;color: whitesmoke;text-align:center;'>Failed</td><td style='text-align:center;'>"+json[i][31]+"</td><td style='text-align:center;'>"+json[i][32]+"</td><td><input type='number' min='0' id='q"+json[i][2]+"6' value='"+json[i][10]+"'></td></tr>";
+                }
+            }
+
+            result+="<tr><td>Keyword</td>";
+            if(json[i][11]==0){
+                result+="<td style='background-color: green;color: whitesmoke;text-align:center;' colspan='3'>Passed</td><td><input type='number' min='0' id='q"+json[i][2]+"7' value='"+json[i][11]+"'></td></tr>";
+            }
+            else{
+                result+="<td style='background-color: red;color: whitesmoke;text-align:center;' colspan='3'>Failed</td><td><input type='number' min='0' id='q"+json[i][2]+"7' value='"+json[i][11]+"'></td></tr>";
+            }
+
+            result+="<tr><td>Function Name</td>";
+            if(json[i][12]==0){
+                result+="<td style='background-color: green;color: whitesmoke;text-align:center;' colspan='3'>Passed</td><td><input type='number' min='0' id='q"+json[i][2]+"8' value='"+json[i][12]+"'></td></tr>";
+            }
+            else{
+                result+="<td style='background-color: red;color: whitesmoke;text-align:center;' colspan='3'>Failed</td><td><input type='number' min='0' id='q"+json[i][2]+"8' value='"+json[i][12]+"'></td></tr>";
+            }
+
+            result+="<tr><td>Syntax</td>";
+            if(json[i][14]==0){
+                result+="<td style='background-color: green;color: whitesmoke;text-align:center;' colspan='3'>Passed</td><td><input type='number' min='0' id='q"+json[i][2]+"9' value='"+json[i][14]+"'></td></tr>";
+            }
+            else{
+                result+="<td style='background-color: red;color: whitesmoke;text-align:center;' colspan='3'>Failed</td><td><input type='number' min='0' id='q"+json[i][2]+"9' value='"+json[i][14]+"'></td></tr>";
+            }
+
+            result+="</table><table><tr><td width='20%'>Comment</td>";
+            
+            result+="<td><textarea rows='4' cols='50' id='c"+json[i][2]+"'>"+json[i][13]+"</textarea></td></tr>";
+
+            result+="<tr><td width='20%'>Total Points</td><td width='80%'>"+(json[i][16]-json[i][14]-json[i][12]-json[i][11]-json[i][10]-json[i][9]-json[i][8]-json[i][7]-json[i][6]-json[i][5])+"/"+json[i][16]+"</td></tr>";
+            result+="</table><br>";
+            Qid[i]=json[i][2];
+            Ttotal+=parseFloat(json[i][16]);
+            total+=json[i][16]-json[i][14]-json[i][12]-json[i][11]-json[i][10]-json[i][9]-json[i][8]-json[i][7]-json[i][6]-json[i][5];
+        }
+        result+="<button class='Ebutton' onclick='UpdateRevEX()'>Update Reviewed Exam</button><br></h3>";
+        document.getElementById("results").innerHTML = result;
+
+        
+        
+        TTtotal=(total/Ttotal)*100.0;
+        document.getElementById("percentage").innerHTML = "Scored "+total+" Out of "+Ttotal+" Result = "+(TTtotal).toFixed(2)+"%";
+    }
+    // else{
+    //     document.getElementById("results").innerHTML = "<h1>"+this.responseText+"</h1>";
+    // }
+
+}
+access.send(sent);
+}
+
+function UpdateRevEX(){
+    var task="UpdatingStudentsScore";
+    var Points=new Array();
+
+    var httpQ="";
+    var httpQip="";
+    var c=0;
+
+    for(i=0;i<Qid.length;i++){
+        for(j=1;j<10;j++){
+            Points[c]=document.getElementById("q"+Qid[i]+""+j).value;
+            httpQip+="&points[]="+Points[c];
+            c++;
+        }
+        Points[c]=document.getElementById("c"+Qid[i]).value;
+        httpQip+="&points[]="+Points[c];
+        c++;
+    }
+
+    for(i=0;i<Qid.length;i++){
+      httpQ+="&Questions[]="+Qid[i];
+      
+    }
+
+    var sent = "task=" +task+httpQ+httpQip;
+    var access = new XMLHttpRequest();    
+    access.open("POST", "Alpha.php", true);
+    access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            window.location.replace("TeacherEditGrade.html");  
+        }
+        else{
+            document.getElementById("test").innerHTML = "Cant connect to database";
+        }
+
+    }
+    access.send(sent);
+
+}
+
+function backhome(){
+  window.location.replace("ReviewStudentGradeSTUDENTS.html");
+}
+
+</script>
+
+</html>
